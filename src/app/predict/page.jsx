@@ -6,7 +6,8 @@ import { useState } from "react";
 import Image from "next/image";
 
 export default function Home() {
-  const BASE_URL = "http://107.22.155.211:8000";
+  // const BASE_URL = "http://107.22.155.211:8000";
+  const BASE_URL = "http://127.0.0.1:8000";
   const [base64Image, setBase64Image] = useState(null);
   const [fileName, setFileName] = useState("default")
   const [loading, setLoading] = useState(false);
@@ -22,10 +23,6 @@ export default function Home() {
       const reader = new FileReader();
       reader.onload = function (e) {
         const base64String = e.target.result;
-        const base64StringRaw = e.target.result.replace(
-          /^data:image.+;base64,/,
-          ""
-        );
         setBase64Image(base64String);
         setFileName(ipFileName)
       };
@@ -42,7 +39,6 @@ export default function Home() {
       headers: {
         "Content-Type": "application/json",
       },
-      // body: JSON.stringify(base64Image.replace(/^data:image.+;base64,/, "")),
       body: JSON.stringify({image: base64Image.replace(/^data:image.+;base64,/, ""), imgname: fileName}),
     };
 
